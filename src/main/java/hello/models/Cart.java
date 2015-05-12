@@ -28,14 +28,14 @@ public class Cart {
         return products.containsKey(product);
     }
 
-    public Map<Product,Integer> getAllProducts()
-    {
-        return this.products;
+
+    public Map<Product, Integer> getProducts() {
+        return products;
     }
 
     public boolean removeProduct(Product product)
     {
-        if(isProductExist(product)) {
+        if(isProductExist(product)){
             products.remove(product);
             return true;
         }
