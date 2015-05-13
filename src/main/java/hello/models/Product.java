@@ -6,6 +6,11 @@ package hello.models;
 public class Product {
     private int productId;
     private String productName;
+
+    public int getProductPrice() {
+        return productPrice;
+    }
+
     private int productPrice;
 
     public Product(int productId, String productName, int productPrice) {

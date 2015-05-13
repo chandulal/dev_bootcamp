@@ -6,6 +6,11 @@ package hello.models;
 public class User {
     private int userId;
     private String userName;
+
+    public String getEmail() {
+        return email;
+    }
+
     private String email;
     public User(int userId, String userName, String email) {
         this.userId=userId;

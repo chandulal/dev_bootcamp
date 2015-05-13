@@ -1,8 +1,11 @@
 package models;
 
 import hello.models.Cart;
+import hello.models.Order;
 import hello.models.Product;
+import hello.models.User;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Map;
@@ -11,9 +14,17 @@ import java.util.Map;
  * Created by chanduk on 12/05/15.
  */
 public class CartTest {
+    User user;
+    Cart cart;
+    @Before
+    public void setUp(){
+        user = new User(101,"Jayanta","awakenindian20@gmail.com");
+        cart = new Cart(user);
+    }
+
     @Test
     public void testAddFirstProductToCartShouldCreateCart(){
-        Cart cart = new Cart();
+
         Product product = new Product(1,"Test Product", 10);
         cart.addToCart(product);
         Map<Product,Integer> products = cart.getProducts();
@@ -22,7 +33,6 @@ public class CartTest {
 
     @Test
     public void testAddSameProductToCartShouldIncrementCount(){
-        Cart cart = new Cart();
         Product product = new Product(1,"Test Product", 10);
         cart.addToCart(product);
         cart.addToCart(product);
@@ -33,7 +43,6 @@ public class CartTest {
 
     @Test
     public void testUpdateProductQuantityInCart(){
-        Cart cart = new Cart();
         Product product = new Product(1,"Test Product", 10);
         cart.addToCart(product);
         cart.updateProductQuantity(product, 20);
@@ -43,7 +52,6 @@ public class CartTest {
 
     @Test (expected = IllegalArgumentException.class)
     public void testUpdateProductLessThanZeroQuantityInCart(){
-        Cart cart = new Cart();
         Product product = new Product(1,"Test Product", 10);
         cart.addToCart(product);
         cart.updateProductQuantity(product, -1);
@@ -51,7 +59,6 @@ public class CartTest {
 
     @Test
     public void testRemoveProductFromCartWhichExists(){
-        Cart cart = new Cart();
         Product product1 = new Product(1,"Test Product1", 101);
         Product product2 = new Product(2,"Test Product2", 102);
         cart.addToCart(product1);
@@ -63,11 +70,19 @@ public class CartTest {
     }
 
     @Test
-    public void testRemoveProductFromCartWhichDoesNotExist(){
-        Cart cart = new Cart();
-        Product product2 = new Product(2,"Test Product2", 102);
+    public void testRemoveProductFromCartWhichDoesNotExist() {
+        Product product2 = new Product(2, "Test Product2", 102);
         cart.addToCart(new Product(1, "Test Product 1", 100));
         final boolean isRemoved = cart.removeProduct(product2);
         Assert.assertFalse(isRemoved);
+    }
+    @Test
+    public void testCartCheckOut(){
+        Product product1 = new Product(1,"IPhone4", 10000);
+        Product product2 = new Product(2,"Nokia6345", 2044);
+        cart.addToCart(product1);
+        cart.addToCart(product2);
+        Order order = cart.checkOut();
+        Assert.assertNotNull(order);
     }
 }

@@ -8,6 +8,16 @@ import java.util.*;
 public class Cart {
     private Map<Product,Integer> products;
 
+    public User getUser() {
+        return user;
+    }
+
+    private User user;
+
+    public Cart(User user) {
+        this.user=user;
+    }
+
     public void addToCart(Product product)
     {
         if(products == null){
@@ -16,8 +26,7 @@ public class Cart {
 
         if(isProductExist(product)){
             products.put(product,products.get(product)+1);
-        }
-        else{
+        } else{
             products.put(product,1);
         }
 
@@ -47,9 +56,14 @@ public class Cart {
              throw new IllegalArgumentException("quantity must be greater than 0");
         }
         if(isProductExist(product)){
-            products.put(product,quantity);
+            products.put(product, quantity);
             return true;
         }
         return false;
+    }
+
+    public Order checkOut(){
+        Order myOrder = new Order(this);
+        return myOrder;
     }
 }
