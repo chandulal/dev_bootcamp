@@ -1,20 +1,27 @@
 package hello.models;
 
-import java.util.*;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by chanduk on 12/05/15.
  */
 public class Cart {
     private Map<Product,Integer> products;
-
-    public User getUser() {
+    private int total;
+    private Customer user;
+    public Customer getUser() {
         return user;
     }
+    public int getTotal(){
+        return total;
+    }
 
-    private User user;
-
-    public Cart(User user) {
+    public Cart(Customer user) {
         this.user=user;
     }
 
@@ -27,7 +34,7 @@ public class Cart {
         if(isProductExist(product)){
             products.put(product,products.get(product)+1);
         } else{
-            products.put(product,1);
+            products.put(product, 1);
         }
 
     }
@@ -62,8 +69,43 @@ public class Cart {
         return false;
     }
 
-    public Order checkOut(){
-        Order myOrder = new Order(this);
-        return myOrder;
+    public int calculateTotal(){
+        Map<Product,Integer> products = this.getProducts();
+        for(Map.Entry<Product,Integer> product : products.entrySet()) {
+            int qunatity = product.getValue();
+            Product currentProduct = product.getKey();
+            int price = currentProduct.getProductPrice();
+            this.total = this.total + (qunatity * price);
+        }
+        return this.total;
+    }
+
+    public String toJSON() throws Exception {
+        Map<Map<String, Integer>, Integer> cartMap = new HashMap<>();
+        Map<Product, Integer> products = this.getProducts();
+
+        for (final Map.Entry<Product, Integer> product : products.entrySet()) {
+            int qunatity = product.getValue();
+            Product currentProduct = product.getKey();
+            final int price = currentProduct.getProductPrice();
+            cartMap.put(new HashMap<String, Integer>() {{
+                put(product.getKey().getProductName(), price);
+            }}, qunatity);
+        }
+       String json =  convertToJson(cartMap);
+        return  json;
+    }
+
+    public String convertToJson(Map<Map<String, Integer>, Integer> cartMap) throws Exception, JsonMappingException {
+
+        String json = "";
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            //convert map to JSON string
+            json = mapper.writeValueAsString(cartMap);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return json;
     }
 }

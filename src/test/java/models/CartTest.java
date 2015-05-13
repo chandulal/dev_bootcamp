@@ -3,7 +3,7 @@ package models;
 import hello.models.Cart;
 import hello.models.Order;
 import hello.models.Product;
-import hello.models.User;
+import hello.models.Customer;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,11 +14,13 @@ import java.util.Map;
  * Created by chanduk on 12/05/15.
  */
 public class CartTest {
-    User user;
+    Customer user;
     Cart cart;
+    //Customer customer;
+
     @Before
     public void setUp(){
-        user = new User(101,"Jayanta","awakenindian20@gmail.com");
+        user = new Customer(101,"Jayanta","awakenindian20@gmail.com");
         cart = new Cart(user);
     }
 
@@ -47,7 +49,7 @@ public class CartTest {
         cart.addToCart(product);
         cart.updateProductQuantity(product, 20);
         Map<Product,Integer> products = cart.getProducts();
-        Assert.assertEquals(Integer.valueOf(20),products.get(product));
+        Assert.assertEquals(Integer.valueOf(20), products.get(product));
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -76,13 +78,16 @@ public class CartTest {
         final boolean isRemoved = cart.removeProduct(product2);
         Assert.assertFalse(isRemoved);
     }
+
     @Test
-    public void testCartCheckOut(){
+    public void testCalculateTotalAmountForOrder(){
         Product product1 = new Product(1,"IPhone4", 10000);
         Product product2 = new Product(2,"Nokia6345", 2044);
         cart.addToCart(product1);
         cart.addToCart(product2);
-        Order order = cart.checkOut();
-        Assert.assertNotNull(order);
+        Order order = new Order(cart);
+        user.checkOut(cart, order);
+        int totalAmount = cart.calculateTotal();
+        junit.framework.Assert.assertEquals(12044, totalAmount);
     }
 }

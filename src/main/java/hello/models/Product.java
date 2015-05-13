@@ -13,6 +13,10 @@ public class Product {
 
     private int productPrice;
 
+    public String getProductName() {
+        return productName;
+    }
+
     public Product(int productId, String productName, int productPrice) {
         this.productId = productId;
         this.productName = productName;

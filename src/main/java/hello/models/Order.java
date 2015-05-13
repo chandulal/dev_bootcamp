@@ -1,35 +1,75 @@
 package hello.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by chanduk on 13/05/15.
  */
-public class Order {
-    private Cart cart;
-    private int total=0;
+
+interface Subject {
+
+    public void register(Observer obj);
+    public void unregister(Observer obj);
+    public void notifyObservers();
+    public Object getEmailDetails(Observer obj);
+    public void sendNotification(Notification mode);
+}
+
+
+
+public class Order implements Subject{
+
+    public void setOrderCreated(boolean orderCreated) {
+        this.orderCreated = orderCreated;
+    }
+
+    private boolean orderCreated = false;
+    private Map<Product,Integer> products;
+    private int total;
+    private Customer user;
+    private List<Observer> observers;
+    private String message;
+
+
     public Order(Cart cart){
-        this.cart = cart;
+        this.products = cart.getProducts();
+        this.user = cart.getUser();
+        this.total = cart.getTotal();
+        this.observers = new ArrayList<>();
     }
 
-    public int calculateTotal(){
-        Map<Product,Integer> products = cart.getProducts();
-
-        for(Map.Entry<Product,Integer> product : products.entrySet()) {
-            int qunatity = product.getValue();
-            Product currentProduct = product.getKey();
-            int price = currentProduct.getProductPrice();
-            this.total = this.total + (qunatity * price);
+    @Override
+    public void register(Observer obj) {
+        if(!observers.contains(obj)){
+            observers.add(obj);
         }
-        return this.total;
     }
 
-    public boolean sendMail() {
+    @Override
+    public void unregister(Observer obj) {
+        if(observers.contains(obj)){
+            observers.remove(obj);
+        }
+    }
 
-        User user = cart.getUser();
-        String email = user.getEmail();
-        if(email!=null)
-            return true;
-        return false;
+    @Override
+    public void notifyObservers() {
+        if(orderCreated){
+            for(Observer obs : observers){
+                obs.update();
+            }
+            orderCreated = false;
+        }
+    }
+    @Override
+    public String getEmailDetails(Observer obj) {
+        return "Email Details";
+    }
+
+    @Override
+    public void sendNotification(Notification mode) {
+        mode.sendNotification();
     }
 }
