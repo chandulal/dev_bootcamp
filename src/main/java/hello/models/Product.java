@@ -1,22 +1,38 @@
 package hello.models;
 
-/**
- * Created by chanduk on 12/05/15.
- */
-public class Product {
+import com.fasterxml.jackson.annotation.JsonView;
+import hello.web.view.View;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+
+@Getter
+@Setter
+@Entity
+@NoArgsConstructor
+@Table(name = "product")
+public class Product extends BaseModel<Product>{
+
+    public final static BaseModel.Repo<Product> REPO = new BaseModel.Repo<Product>(Product.class);
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int productId;
+
+    @JsonView(View.ProductListing.class)
+    private String productName;
+
+    @JsonView(View.ProductListing.class)
+    private int productPrice;
+
     public int getProductId() {
         return productId;
     }
-
-    private int productId;
-    private String productName;
-
     public int getProductPrice() {
         return productPrice;
     }
-
-    private int productPrice;
-
     public String getProductName() {
         return productName;
     }

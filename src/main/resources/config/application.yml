@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shoppy
+    username: shoppy
+    password: shoppy
+    driverClassName: org.postgresql.Driver
+
+logging:
+  level:
+    org:
+      springframework:
+        web: INFO
+      hibernate: INFO

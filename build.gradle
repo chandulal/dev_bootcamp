@@ -21,12 +21,29 @@ repositories {
     mavenCentral()
 }
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.boot:spring-boot-starter-web:1.2.3.RELEASE")
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+
+    // Restful
+    compile("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
+
+    // Util
+    compile('org.projectlombok:lombok:1.16.2')
+
+    // DB
+    compile('commons-dbcp:commons-dbcp:1.4')
+    compile('postgresql:postgresql:9.1-901-1.jdbc4')
+
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.flywaydb:flyway-core')
+
+    // Test
     testCompile group: 'junit', name: 'junit', version: '4.11'
+
 }
 
 task wrapper(type: Wrapper) {

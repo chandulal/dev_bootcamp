@@ -1,12 +1,14 @@
 package hello.controllers;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import hello.models.Cart;
 import hello.models.Customer;
 import hello.models.Product;
+import hello.web.view.View;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by chanduk on 12/05/15.
@@ -31,6 +33,21 @@ public class CartController {
         //model.addAttribute("name",cart.toJSON());
         //return "viewcart";
         return cart;
+    }
+
+
+    @RequestMapping(value = "/products", method = RequestMethod.POST)
+    @JsonView(View.ProductListing.class)
+    public String create(@RequestBody Product product) {
+        System.out.println(product);
+        product.saveIt();
+        return "product added with id "+ product.getProductId();
+    }
+
+    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    @JsonView(View.ProductListing.class)
+    public List<Product> get() {
+        return Product.REPO.all();
     }
 
 }
