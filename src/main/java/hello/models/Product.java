@@ -4,6 +4,10 @@ package hello.models;
  * Created by chanduk on 12/05/15.
  */
 public class Product {
+    public int getProductId() {
+        return productId;
+    }
+
     private int productId;
     private String productName;
 

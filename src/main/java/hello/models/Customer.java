@@ -5,6 +5,15 @@ package hello.models;
  */
 public class Customer {
     private int userId;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
     private String userName;
     private String email;
 
