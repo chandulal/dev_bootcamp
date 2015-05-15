@@ -44,10 +44,16 @@ public class CartController {
         return "product added with id "+ product.getProductId();
     }
 
-    @RequestMapping(value = "/products", method = RequestMethod.GET)
+   /* @RequestMapping(value = "/products", method = RequestMethod.GET)
     @JsonView(View.ProductListing.class)
     public List<Product> get() {
         return Product.REPO.all();
     }
-
+    */
+   @RequestMapping("/products")
+   public  List<Product> get(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) throws Exception {
+       List<Product> list=Product.REPO.all();
+       model.addAttribute("products", list.get(0));
+       return list;
+   }
 }

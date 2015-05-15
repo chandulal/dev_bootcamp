@@ -1,0 +1,14 @@
+<table border="1">
+    <thead>
+    <tr>
+        <th>Serial</th>
+        <th>Name</th>
+        <th>Price</th>
+    </tr>
+    </thead>
+    <tr ng-repeat = "product in allProducts track by $index" >
+        <td>{{ $index + 1 }}</td>
+        <td style="margin-left: 26px;">{{ product.productName }}</td>
+        <td style="margin-left: 26px;">{{ product.productPrice }}</td>
+    </tr>
+</table>
