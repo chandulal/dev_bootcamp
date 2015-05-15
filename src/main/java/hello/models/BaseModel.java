@@ -8,7 +8,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
-import java.util.Optional;
 
 @MappedSuperclass
 public abstract class BaseModel<T> {
@@ -32,10 +31,10 @@ public abstract class BaseModel<T> {
                     .getResultList();
         }
 
-        public Optional<T> find(Integer primaryKey) {
+    /*    public Optional<T> find(Integer primaryKey) {
             return Optional.ofNullable(entityManager().find(klass, primaryKey));
         }
-
+   */
     }
 
     @SuppressWarnings("unchecked")

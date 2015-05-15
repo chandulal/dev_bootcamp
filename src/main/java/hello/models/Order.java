@@ -32,7 +32,9 @@ public class Order implements Subject{
     private List<Observer> observers;
     private String message;
 
+    public Order(){
 
+    }
     public Order(Cart cart){
         this.products = cart.getProducts();
         this.user = cart.getUser();

@@ -73,5 +73,4 @@ public class Product extends BaseModel<Product>{
         result = 31 * result + (productName != null ? productName.hashCode() : 0);
         return result;
     }
-
 }

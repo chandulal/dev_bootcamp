@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by chanduk on 12/05/15.
@@ -45,7 +44,7 @@ public class CartController {
         return "product added with id "+ product.getProductId();
     }
 
-    @RequestMapping(value = "/products/{id}", method = RequestMethod.PUT)
+   /* @RequestMapping(value = "/products/{id}", method = RequestMethod.PUT)
     @JsonView(View.ProductListing.class)
     public String update(@PathVariable int id, @RequestBody Product product) {
         Optional<Product> optional = product.REPO.find(id);
@@ -55,7 +54,7 @@ public class CartController {
         product.saveIt();
         return "product updated with id "+ product.getProductId();
     }
-
+*/
    /* @RequestMapping(value = "/products", method = RequestMethod.GET)
     @JsonView(View.ProductListing.class)
     public List<Product> get() {
