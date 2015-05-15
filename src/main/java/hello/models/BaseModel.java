@@ -32,7 +32,7 @@ public abstract class BaseModel<T> {
                     .getResultList();
         }
 
-        public Optional<T> find(Long primaryKey) {
+        public Optional<T> find(Integer primaryKey) {
             return Optional.ofNullable(entityManager().find(klass, primaryKey));
         }
 
@@ -41,6 +41,11 @@ public abstract class BaseModel<T> {
     @SuppressWarnings("unchecked")
     public T saveIt() {
         entityManager().persist(this);
+        return (T) this;
+    }
+
+    public T deleteIt() {
+        entityManager().remove(this);
         return (T) this;
     }
 

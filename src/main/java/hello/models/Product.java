@@ -17,6 +17,18 @@ public class Product extends BaseModel<Product>{
 
     public final static BaseModel.Repo<Product> REPO = new BaseModel.Repo<Product>(Product.class);
 
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setProductPrice(int productPrice) {
+        this.productPrice = productPrice;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
@@ -61,4 +73,5 @@ public class Product extends BaseModel<Product>{
         result = 31 * result + (productName != null ? productName.hashCode() : 0);
         return result;
     }
+
 }
